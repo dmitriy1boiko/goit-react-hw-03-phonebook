@@ -7,14 +7,20 @@ import { Contacts } from './contacts/Contacts';
 import { FilterContacts } from './filter-contacts/FilterContacts';
 export class App extends Component {
   state = {
-    contacts: [
-      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
-      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
-      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
-      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
-    ],
+    contacts: [],
     filter: '',
   };
+  componentDidUpdate(prevState) {
+    if (prevState.contacts !== this.state.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+    if (contacts) {
+      this.setState({ contacts: JSON.parse(contacts) });
+    }
+  }
   findContact(contact) {
     return this.state.contacts.find(
       item => item.name.toLowerCase() === contact.name.toLowerCase()
@@ -65,7 +71,9 @@ export class App extends Component {
                 onDeleteContact={this.handleDeleteContact}
               />
             </>
-          ):(<p>No contacts</p>)}
+          ) : (
+            <p>No contacts</p>
+          )}
         </Section>
       </Container>
     );
