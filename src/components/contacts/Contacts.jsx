@@ -1,8 +1,7 @@
 import PropTypes from 'prop-types';
 import { Button, Wrap, Contact } from './Contacts.styled';
 
-
-export const Contacts = ({ contacts, onDeleteContact  }) => {
+export const Contacts = ({ contacts, onDeleteContact }) => {
   return (
     <ul>
       {contacts.map(contact => (
@@ -11,7 +10,7 @@ export const Contacts = ({ contacts, onDeleteContact  }) => {
             <Contact>
               {contact.name}: {contact.number}
             </Contact>
-            <Button type="button"  onClick={() => onDeleteContact(contact.id)}>
+            <Button type="button" onClick={() => onDeleteContact(contact.id)}>
               Delete
             </Button>
           </Wrap>
